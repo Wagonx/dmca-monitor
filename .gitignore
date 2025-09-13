@@ -1,0 +1,36 @@
+# Python basics
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+dist/
+build/
+
+# Virtual environment
+.venv/
+venv/
+env/
+
+# OS cruft
+.DS_Store
+Thumbs.db
+
+# Logs and caches
+logs/
+*.log
+scratch/
+db/seen.json
+
+# Your sensitive data
+config.yaml        # personal config with API keys
+db/hashes.json     # hash DB built from your private images
+known_images/      # do NOT share leaked/private images
+scratch/downloads/ # saved copies of matches
+
+# IDE/editor
+.vscode/
+.idea/
+*.swp
+*.swo
