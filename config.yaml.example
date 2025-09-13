@@ -26,6 +26,7 @@ match:
 paths:
   hash_db: "db/hashes.json"
   seen_cache: "db/seen.json"
+  alerts_state: "db/alerts.json"
   logs_csv: "logs/matches.csv"
   downloads: "scratch/downloads"
 

@@ -1,0 +1,48 @@
+﻿
+
+   Source: C:\Users\colli\Repos\dmca-monitor
+
+Mode            Length Hierarchy                                                                                       
+----            ------ ---------                                                                                       
+d-----        37.87 KB dmca-monitor                                                                                    
+-a----       533.00  B ├── .gitignore                                                                                  
+-a----         1.15 KB ├── config.yaml                                                                                 
+-a----         1.08 KB ├── config.yaml.example                                                                         
+-a----        34.98 KB ├── LICENSE                                                                                     
+-a----       139.00  B ├── requirments.txt                                                                             
+-a----         0.00  B ├── tree.txt                                                                                    
+d-----         0.00  B ├── __pycache__                                                                                 
+d-----       169.00  B ├── backend                                                                                     
+-a----       169.00  B │   ├── pyproject.toml                                                                          
+d-----        16.32 KB │   ├── dmca_monitor                                                                            
+-a----        88.00  B │   │   ├── __init__.py                                                                         
+-a----         1.11 KB │   │   ├── build_hash_db.py                                                                    
+-a----         9.11 KB │   │   ├── scan_and_alert.py                                                                   
+-a----         1.71 KB │   │   ├── state.py                                                                            
+-a----         4.30 KB │   │   └── utils.py                                                                            
+d-----       386.00  B │   └── dmca_monitor.egg-info                                                                   
+-a----         1.00  B │       ├── dependency_links.txt                                                                
+-a----        84.00  B │       ├── PKG-INFO                                                                            
+-a----       288.00  B │       ├── SOURCES.txt                                                                         
+-a----        13.00  B │       └── top_level.txt                                                                       
+d-----        37.71 KB ├── db                                                                                          
+-a----         0.00  B │   ├── alerts.json                                                                             
+-a----        10.99 KB │   ├── hashes.json                                                                             
+-a----        26.72 KB │   └── seen.json                                                                               
+d-----         0.00  B ├── known_images                                                                                
+d-----         2.87 KB ├── logs                                                                                        
+-a----         2.87 KB │   └── matches.csv                                                                             
+d-----         0.00  B ├── scratch                                                                                     
+d-----         3.26 KB └── webapp                                                                                      
+-a----         3.26 KB     ├── app.py                                                                                  
+d-----         1.80 KB     ├── static                                                                                  
+-a----         1.80 KB     │   └── style.css                                                                           
+d-----         5.08 KB     └── templates                                                                               
+-a----       272.00  B         ├── _nav.html                                                                           
+-a----       394.00  B         ├── base.html                                                                           
+-a----       300.00  B         ├── index.html                                                                          
+-a----         1.12 KB         ├── logs.html                                                                           
+-a----         2.36 KB         ├── site_detail.html                                                                    
+-a----       676.00  B         └── sites.html                                                                          
+
+

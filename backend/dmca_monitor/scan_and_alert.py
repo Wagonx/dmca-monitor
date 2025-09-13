@@ -4,41 +4,34 @@ import requests
 from bs4 import BeautifulSoup
 from PIL import Image
 from datetime import datetime, timezone
-from urllib.parse import urljoin, urlparse, quote_plus
+from urllib.parse import urljoin, urlparse
 from collections import defaultdict
 from utils import (
     ensure_dirs, load_json, save_json, compute_hashes, any_distance_below,
-    download_image, log_match, ssim_match,  # keep your Discord notifier import if you added it
+    download_image, log_match, ssim_match
 )
+
+# try local state.py; if you packaged under backend/dmca_monitor, the plain import still works when PYTHONPATH=backend
+from state import load_state, save_state, upsert_match
 
 # ---------- Google Programmable Search helpers ----------
 
 def google_image_search(api_key: str, cse_id: str, query: str, count: int):
-    """
-    Uses Google Custom Search JSON API with searchType=image.
-    Returns list of (image_link, context_link).
-    """
     results = []
-    # Google returns up to 10 results per request; use 'start' to page if needed
     remaining = max(0, int(count))
     start = 1
-    while remaining > 0 and start <= 91:  # API supports start 1..91
+    while remaining > 0 and start <= 91:
         page_count = min(10, remaining)
         params = {
-            "key": api_key,
-            "cx": cse_id,
-            "q": query,
-            "searchType": "image",
-            "num": page_count,
-            "start": start,
-            "safe": "off",
+            "key": api_key, "cx": cse_id, "q": query,
+            "searchType": "image", "num": page_count, "start": start, "safe": "off",
         }
         r = requests.get("https://www.googleapis.com/customsearch/v1", params=params, timeout=20)
         r.raise_for_status()
         data = r.json()
         items = data.get("items") or []
         for it in items:
-            link = it.get("link")            # direct image URL
+            link = it.get("link")
             ctx  = it.get("image", {}).get("contextLink") or it.get("link")
             if link:
                 results.append((link, ctx))
@@ -50,22 +43,14 @@ def google_image_search(api_key: str, cse_id: str, query: str, count: int):
     return results
 
 def google_web_search(api_key: str, cse_id: str, query: str, count: int):
-    """
-    Uses Google Custom Search JSON API for web results (no searchType=image).
-    Returns list of page URLs that we can scrape for <img>.
-    """
     urls = []
     remaining = max(0, int(count))
     start = 1
     while remaining > 0 and start <= 91:
         page_count = min(10, remaining)
         params = {
-            "key": api_key,
-            "cx": cse_id,
-            "q": query,
-            "num": page_count,
-            "start": start,
-            "safe": "off",
+            "key": api_key, "cx": cse_id, "q": query,
+            "num": page_count, "start": start, "safe": "off",
         }
         r = requests.get("https://www.googleapis.com/customsearch/v1", params=params, timeout=20)
         r.raise_for_status()
@@ -100,14 +85,12 @@ def extract_images_from_page(page_url: str, timeout: int = 15):
 
 def base_url(u: str) -> str:
     try:
-        p = urlparse(u)
+        p = urlparse(u or "")
         if p.scheme and p.netloc:
             return f"{p.scheme}://{p.netloc}".lower()
-        # fallback to netloc only
         return (p.netloc or u).lower()
     except Exception:
         return "(unknown)"
-
 
 # ---------- Main scan ----------
 
@@ -127,17 +110,20 @@ def main(cfg_path: str):
 
     hash_db_path = paths.get("hash_db", "db/hashes.json")
     seen_cache_path = paths.get("seen_cache", "db/seen.json")
+    alerts_state_path = paths.get("alerts_state", "db/alerts.json")  # NEW
     logs_csv = paths.get("logs_csv", "logs/matches.csv")
     downloads_dir = paths.get("downloads", "scratch/downloads")
 
     ensure_dirs(os.path.dirname(hash_db_path), os.path.dirname(seen_cache_path),
-                os.path.dirname(logs_csv), downloads_dir)
+                os.path.dirname(alerts_state_path), os.path.dirname(logs_csv), downloads_dir)
 
     with open(hash_db_path, "r", encoding="utf-8") as f:
         known_hashes = json.load(f)
 
     seen = load_json(seen_cache_path, default={"urls": []})
     seen_urls = set(seen.get("urls", []))
+
+    alerts = load_state(alerts_state_path)  # NEW
 
     # Google config
     gcfg = engines.get("google", {})
@@ -147,34 +133,29 @@ def main(cfg_path: str):
     g_img_count = int(gcfg.get("image_count_per_term", 10))
     g_web_count = int(gcfg.get("web_count_per_term", 0))
 
-    # Optional: Discord notifier (if you added it earlier)
+    # Discord (optional)
     discord_hook = notify.get("discord_webhook", "")
     discord_username = notify.get("discord_username", None)
     discord_avatar = notify.get("discord_avatar_url", None)
     def notify_discord(msg: str):
-        # no-op if you didn’t add discord in utils
         try:
             from utils import discord_notify
-            discord_notify(discord_hook, msg, username=discord_username, avatar_url=discord_avatar)
+            if discord_hook:
+                discord_notify(discord_hook, msg, username=discord_username, avatar_url=discord_avatar)
         except Exception:
             pass
 
     now = datetime.now(timezone.utc).isoformat()
-
-    grouped = defaultdict(list)  # base_url -> list of match dicts
+    grouped = defaultdict(list)  # base_url -> list[row] (only "new" & not muted)
 
     for term in terms:
         candidates = []
 
         if google_enabled and g_api_key and g_cse_id:
-            # 1) direct image results
             try:
-                img_results = google_image_search(g_api_key, g_cse_id, term, g_img_count)
-                candidates.extend(img_results)  # list of (img_url, host_page)
+                candidates.extend(google_image_search(g_api_key, g_cse_id, term, g_img_count))
             except Exception:
                 pass
-
-            # 2) optional: scrape images from web results
             if g_web_count > 0:
                 try:
                     pages = google_web_search(g_api_key, g_cse_id, term, g_web_count)
@@ -184,7 +165,6 @@ def main(cfg_path: str):
                 except Exception:
                     pass
 
-        # Process candidates
         for img_url, host in candidates:
             if img_url in seen_urls:
                 continue
@@ -210,8 +190,7 @@ def main(cfg_path: str):
                     break
 
             if matched_key:
-                fname = os.path.basename(
-                    urlparse(img_url).path) or "image.jpg"
+                fname = os.path.basename(urlparse(img_url).path) or "image.jpg"
                 out_path = os.path.join(downloads_dir, fname)
                 try:
                     img.save(out_path)
@@ -226,54 +205,48 @@ def main(cfg_path: str):
                     "matched_known_file": matched_key,
                     "saved_copy": out_path
                 }
-                # Keep per-hit CSV log
+
+                # Always keep audit log
                 log_match(logs_csv, row)
 
-                # Group for per-base notification
-                key = base_url(host or img_url)
-                grouped[key].append(row)
+                # Update per-site alert state
+                site_key = base_url(row["host_page"] or row["image_url"])
+                rec = upsert_match(alerts, site_key, row["image_url"], {**row, "timestamp_utc": now})
 
+                # Notify only if first time (status=new) and not muted
+                if (rec.get("status") == "new") and (not rec.get("muted", False)):
+                    grouped[site_key].append(row)
+
+    # Persist caches/state
     save_json(seen_cache_path, {"urls": sorted(list(seen_urls))})
+    save_state(alerts_state_path, alerts)
 
-
-    # ---- Send one Discord notification per base URL ----
+    # ---- One Discord message per base URL ----
     def format_line(s: str, maxlen: int = 160) -> str:
-        # keep lines tidy in Discord; avoid super-long URLs blowing up the message
         return (s if len(s) <= maxlen else s[: maxlen - 1] + "…")
 
     for b, items in grouped.items():
         total = len(items)
-        # unique terms
         terms_set = sorted({it["term"] for it in items})
         terms_str = ", ".join(terms_set)
 
-        # Show up to N example image URLs and host pages
         N = 8
         lines = []
         for it in items[:N]:
             ex_url = it["image_url"]
             host_pg = it["host_page"] or "(no host page)"
-            lines.append(
-                f"- {format_line(ex_url)}  (via {format_line(host_pg)})")
+            lines.append(f"- {format_line(ex_url)}  (via {format_line(host_pg)})")
 
         extra = total - len(lines)
         extra_line = f"\n… and {extra} more matches" if extra > 0 else ""
 
         msg = (
-                f"**DMCA Monitor — {b}**\n"
-                f"Matches: **{total}**  |  Terms: {terms_str}\n"
-                + "\n".join(lines)
-                + extra_line
+            f"**DMCA Monitor — {b}**\n"
+            f"Matches: **{total}**  |  Terms: {terms_str}\n"
+            + "\n".join(lines)
+            + extra_line
         )
-
-        # If you wired Discord earlier:
-        try:
-            from utils import discord_notify
-            discord_notify(discord_hook, msg, username=discord_username,
-                           avatar_url=discord_avatar)
-        except Exception:
-            pass
-
+        notify_discord(msg)
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()

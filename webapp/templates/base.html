@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>DMCA Monitor</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+</head>
+<body>
+  {% include "_nav.html" %}
+  <main class="container">
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>

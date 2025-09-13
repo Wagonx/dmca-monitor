@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>Sites with Matches</h2>
+  {% if sites %}
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Domain</th>
+          <th>Matches</th>
+          <th>Terms</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for s in sites %}
+        <tr>
+          <td><a href="{{ url_for('site_detail', domain=s.domain) }}">{{ s.domain }}</a></td>
+          <td class="num">{{ s.count }}</td>
+          <td class="mono">{{ s.terms }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+    <p>No matches yet.</p>
+  {% endif %}
+{% endblock %}

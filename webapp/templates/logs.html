@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>Logs</h2>
+  {% if rows %}
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Time (UTC)</th>
+          <th>Term</th>
+          <th>Host Page</th>
+          <th>Image URL</th>
+          <th>Known File</th>
+          <th>Saved Copy</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for r in rows %}
+        <tr>
+          <td class="nowrap">{{ r.timestamp_utc }}</td>
+          <td>{{ r.term }}</td>
+          <td><a href="{{ r.host_page }}" target="_blank" rel="noopener">{{ r.host_page }}</a></td>
+          <td><a href="{{ r.image_url }}" target="_blank" rel="noopener">{{ r.image_url }}</a></td>
+          <td class="mono">{{ r.matched_known_file }}</td>
+          <td>
+            {% if r.saved_copy %}
+              <a href="{{ url_for('downloads', filename=r.saved_copy.split('scratch/downloads/')[-1]) }}" target="_blank">open</a>
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+    <p>No logs yet.</p>
+  {% endif %}
+{% endblock %}

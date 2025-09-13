@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1>DMCA Monitor</h1>
+  <p>Super simple dashboard.</p>
+  <ul class="quick-links">
+    <li><a href="{{ url_for('view_logs') }}">View Logs</a></li>
+    <li><a href="{{ url_for('sites') }}">View Sites with Matches</a></li>
+  </ul>
+{% endblock %}
