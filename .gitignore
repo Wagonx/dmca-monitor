@@ -26,7 +26,7 @@ db/seen.json
 # Your sensitive data
 config.yaml        # personal config with API keys
 db/hashes.json     # hash DB built from your private images
-known_images/      # do NOT share leaked/private images
+known_images/     # do NOT share leaked/private images
 scratch/downloads/ # saved copies of matches
 
 # IDE/editor

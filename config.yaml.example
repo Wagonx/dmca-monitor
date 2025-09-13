@@ -4,13 +4,12 @@ search_terms:
   - another_alias
 
 engines:
-  bing:
+  google:
     enabled: true
-    # Get a key from Azure Cognitive Services (Bing Search v7)
-    bing_api_key: "YOUR_BING_V7_KEY"
-    market: "en-US"
-    image_count_per_term: 50   # image results per term per run
-    web_count_per_term: 20     # optional: also scan web pages for <img> tags
+    api_key: "YOUR_GOOGLE_API_KEY"   # from Google Cloud (enabled Custom Search JSON API)
+    cse_id:  "YOUR_CSE_ID"           # from Programmable Search Engine
+    image_count_per_term: 10         # image results per term per run (counts against quota)
+    web_count_per_term: 5            # optional: web results to scrape for extra <img>
 
 notify:
   # slack_webhook: ""            # optional Slack webhook URL
