@@ -1,4 +1,5 @@
 import argparse, os, json
+import logging
 from PIL import Image
 from utils import ensure_dirs, compute_hashes
 
@@ -14,10 +15,12 @@ def build_db(images_dir: str, out_path: str):
                         im = im.convert("RGB")
                         hashes = compute_hashes(im)
                         db[fp] = hashes
-                except Exception:
-                    continue
+                        logging.debug("Hashed %s", fp)
+                except Exception as e:
+                    logging.exception("Failed hashing %s", fp)
     with open(out_path, "w", encoding="utf-8") as f:
         json.dump(db, f, indent=2, ensure_ascii=False)
+    logging.info("Wrote %d entries to %s", len(db), out_path)
     print(f"Wrote {len(db)} entries to {out_path}")
 
 if __name__ == "__main__":

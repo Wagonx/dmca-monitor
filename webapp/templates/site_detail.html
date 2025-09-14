@@ -1,56 +1,68 @@
-<div class="card">
-  <div class="card-body">
-    <div class="muted small">
-      {{ m.timestamp_utc }} • term: <b>{{ m.term }}</b>
+{% extends "base.html" %}
+{% block content %}
+  <h1 class="title">{{ domain }}</h1>
+
+  {% if matches and matches|length %}
+    {% for m in matches %}
       {% set meta = m._meta or {} %}
-      • status: <b>{{ meta.status or 'new' }}</b>
-      • muted: <b>{{ 'yes' if meta.muted else 'no' }}</b>
-      • seen: {{ meta.seen_count or '1' }}
-    </div>
+      <div class="card">
+        <div class="card-body">
 
-    <div class="img-wrap">
-      {% if m.saved_copy %}
-        <a href="{{ url_for('downloads', filename=m.saved_copy.split('scratch/downloads/')[-1]) }}" target="_blank" rel="noopener">
-          <img src="{{ url_for('downloads', filename=m.saved_copy.split('scratch/downloads/')[-1]) }}" alt="saved copy">
-        </a>
-      {% else %}
-        <a href="{{ m.image_url }}" target="_blank" rel="noopener">remote image</a>
-      {% endif %}
-    </div>
+          <!-- Meta line -->
+          <div class="muted small">
+            {{ m.timestamp_utc }} • term: <b>{{ m.term }}</b>
+            • status: <b>{{ meta.status or 'new' }}</b>
+            • muted: <b>{{ 'yes' if meta.muted else 'no' }}</b>
+            • seen: {{ meta.seen_count or '1' }}
+          </div>
 
-    <div class="links">
-      <a href="{{ m.host_page }}" target="_blank" rel="noopener">host page</a>
-      <a href="{{ m.image_url }}" target="_blank" rel="noopener">image url</a>
-    </div>
+          <!-- Links (no image preview) -->
+          <div class="links" style="margin: 6px 0;">
+            {% if m._saved_rel %}
+              <a href="{{ url_for('downloads', filename=m._saved_rel) }}" target="_blank" rel="noopener">saved copy</a>
+            {% endif %}
+            {% if m.image_url %}
+              <a href="{{ m.image_url }}" target="_blank" rel="noopener">image url</a>
+            {% endif %}
+            {% if m.host_page %}
+              <a href="{{ m.host_page }}" target="_blank" rel="noopener">host page</a>
+            {% endif %}
+          </div>
 
-    <!-- Actions -->
-    <form method="post" action="{{ url_for('ack_match', domain=domain) }}" style="display:inline">
-      <input type="hidden" name="image_url" value="{{ m.image_url }}">
-      <button type="submit">Ack</button>
-    </form>
-    <form method="post" action="{{ url_for('close_match', domain=domain) }}" style="display:inline">
-      <input type="hidden" name="image_url" value="{{ m.image_url }}">
-      <button type="submit">Close</button>
-    </form>
-    <form method="post" action="{{ url_for('mute_match', domain=domain) }}" style="display:inline">
-      <input type="hidden" name="image_url" value="{{ m.image_url }}">
-      <button type="submit">{{ 'Unmute' if (meta.muted if meta else False) else 'Mute' }}</button>
-    </form>
+          <!-- Actions -->
+          <form method="post" action="{{ url_for('ack_match', domain=domain) }}" style="display:inline">
+            <input type="hidden" name="image_url" value="{{ m.image_url }}">
+            <button type="submit">Ack</button>
+          </form>
+          <form method="post" action="{{ url_for('close_match', domain=domain) }}" style="display:inline">
+            <input type="hidden" name="image_url" value="{{ m.image_url }}">
+            <button type="submit">Close</button>
+          </form>
+          <form method="post" action="{{ url_for('mute_match', domain=domain) }}" style="display:inline">
+            <input type="hidden" name="image_url" value="{{ m.image_url }}">
+            <button type="submit">{{ 'Unmute' if (meta.muted if meta else False) else 'Mute' }}</button>
+          </form>
 
-    <!-- Notes -->
-    <div class="mono small wrap">
-      known: {{ m.matched_known_file }}
-    </div>
-    <div class="notes">
-      <div class="small muted">Notes:</div>
-      {% for n in (meta.notes or []) %}
-        <div class="small">• {{ n.ts }} — {{ n.text }}</div>
-      {% endfor %}
-      <form method="post" action="{{ url_for('note_match', domain=domain) }}">
-        <input type="hidden" name="image_url" value="{{ m.image_url }}">
-        <input type="text" name="note" placeholder="Add a note…" style="width:70%">
-        <button type="submit">Add</button>
-      </form>
-    </div>
-  </div>
-</div>
+          <!-- Notes -->
+          <div class="mono small wrap" style="margin-top:8px;">
+            known: {{ m.matched_known_file }}
+          </div>
+          <div class="notes" style="margin-top:6px;">
+            <div class="small muted">Notes:</div>
+            {% for n in (meta.notes or []) %}
+              <div class="small">• {{ n.ts }} — {{ n.text }}</div>
+            {% endfor %}
+            <form method="post" action="{{ url_for('note_match', domain=domain) }}" style="margin-top:6px;">
+              <input type="hidden" name="image_url" value="{{ m.image_url }}">
+              <input type="text" name="note" placeholder="Add a note…" style="width:70%">
+              <button type="submit">Add</button>
+            </form>
+          </div>
+
+        </div>
+      </div>
+    {% endfor %}
+  {% else %}
+    <p>No matches for <b>{{ domain }}</b> yet.</p>
+  {% endif %}
+{% endblock %}

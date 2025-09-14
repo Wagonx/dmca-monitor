@@ -42,3 +42,49 @@ td.nowrap { white-space: nowrap; }
 .card-body { padding: 12px; }
 .img-wrap img { width: 100%; height: auto; display: block; border-radius: 8px; background: #0e1116; }
 .quick-links li { margin: 6px 0; }
+
+
+/* --- Sensitive image spoiler & sizing --- */
+.img-wrap {
+  margin: 8px 0;
+  /* cap the visual size; card can still be wider */
+  max-width: 320px;              /* adjust to taste */
+}
+.img-wrap details.spoiler {
+  width: 100%;
+}
+.img-wrap details.spoiler > summary {
+  list-style: none;
+  cursor: pointer;
+  margin-bottom: 6px;
+  color: var(--muted);
+  font-size: 12px;
+}
+.img-wrap details.spoiler > summary::-webkit-details-marker { display: none; }
+
+/* size the image smaller */
+.sensitive-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 240px;             /* adjust to taste */
+  object-fit: cover;
+  border-radius: 8px;
+  background: #0e1116;
+}
+
+/* blur + dim when spoiler is closed (no JS needed) */
+details.spoiler:not([open]) .sensitive-img {
+  filter: blur(16px) brightness(0.6);
+}
+
+/* optional: subtle outline hint while closed */
+details.spoiler:not([open]) .sensitive-img {
+  outline: 1px dashed rgba(255,255,255,0.15);
+}
+
+/* responsive on narrow screens */
+@media (max-width: 480px) {
+  .img-wrap { max-width: 90vw; }
+  .sensitive-img { max-height: 55vw; }
+}
