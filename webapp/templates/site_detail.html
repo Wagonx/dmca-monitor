@@ -7,13 +7,16 @@
     {% for m in items %}
       <div class="card">
         <div class="card-body">
-          <div class="muted small">
-            {{ m.timestamp_utc }} • term: <b>{{ m.term }}</b>
-            {% set meta = m._meta or {} %}
-            • status: <b>{{ meta.status or 'new' }}</b>
-            • muted: <b>{{ 'yes' if meta.muted else 'no' }}</b>
-            • seen: {{ meta.seen_count or '1' }}
-          </div>
+
+        <div class="muted small">
+          {{ m.timestamp_utc|fmt_dt }} • term: <b>{{ m.term }}</b>
+          {% set meta = m._meta or {} %}
+          • status: <b>{{ meta.status or 'new' }}</b>
+          • muted: <b>{{ 'yes' if meta.muted else 'no' }}</b>
+          • seen: {{ meta.seen_count or '1' }}
+          • last seen: {{ meta.last_seen_utc|fmt_dt }}
+          {% if meta.removed_at_utc %} • removed: {{ meta.removed_at_utc|fmt_dt }}{% endif %}
+        </div>
 
           <div class="links" style="margin:8px 0">
             <a href="{{ m.host_page }}" target="_blank" rel="noopener">Host Page</a>

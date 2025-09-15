@@ -1,10 +1,9 @@
-import os, io, json, csv
-from typing import Dict, Any
-import requests
+import os, io, json, csv, logging, requests, imagehash
+from datetime import time
+from typing import List, Dict, Any, Optional
 from PIL import Image, UnidentifiedImageError
-import imagehash
 import numpy as np
-
+from urllib.parse import urlparse
 try:
     from skimage.metrics import structural_similarity as ssim
 except Exception:
@@ -139,9 +138,109 @@ def discord_notify(
         payload = {
             "content": chunk,
             "allowed_mentions": {"parse": []},  # avoid accidental pings
+            "flags": 4,  # SUPPRESS_EMBEDS
         }
         if username:
             payload["username"] = username
         if avatar_url:
             payload["avatar_url"] = avatar_url
         _discord_post(webhook, payload)
+
+def init_logger_to_logs(log_filename: str = "debug.log") -> str:
+    """Initialize logging to <repo-root>/logs/<log_filename>."""
+    here = os.path.dirname(os.path.abspath(__file__))          # backend/dmca_monitor
+    repo_root = os.path.abspath(os.path.join(here, "..", ".."))# repo root
+    log_dir = os.path.join(repo_root, "logs")
+    os.makedirs(log_dir, exist_ok=True)
+    path = os.path.join(log_dir, log_filename)
+    if not logging.getLogger().handlers:
+        logging.basicConfig(
+            filename=path,
+            filemode="a",
+            level=logging.DEBUG,
+            format="%(asctime)s [%(levelname)s] %(message)s",
+        )
+    return path
+
+def cse_fetch_paginated(
+    api_key: str,
+    cse_id: str,
+    query: str,
+    count: int,
+    *,
+    search_type: Optional[str] = None,  # "image" or None
+    per_page: int = 10,
+    request_timeout: int = 20,
+    max_start: int = 91,                # CSE caps start so 1..91 gives 10 pages
+    backoff_secs: float = 1.5,
+) -> List[Dict[str, Any]]:
+    """
+    Unified Google Programmable Search pagination.
+    Returns the raw 'items' dicts across pages.
+    """
+    init_logger_to_logs()  # ensure logger is targeting /logs/debug.log
+    items_all: List[Dict[str, Any]] = []
+    remaining = max(0, int(count))
+    start = 1
+
+    while remaining > 0 and start <= max_start:
+        page_count = min(per_page, remaining)
+        params = {
+            "key": api_key,
+            "cx": cse_id,
+            "q": query,
+            "num": page_count,
+            "start": start,
+            "safe": "off",
+        }
+        if search_type:
+            params["searchType"] = search_type
+
+        try:
+            r = requests.get("https://www.googleapis.com/customsearch/v1",
+                             params=params, timeout=request_timeout)
+            if r.status_code in (429, 500, 502, 503, 504):
+                logging.warning("CSE %s %s rate/serve issue (status=%s). Backing off %.1fs",
+                                search_type or "web", query, r.status_code, backoff_secs)
+                time.sleep(backoff_secs)
+                continue
+            r.raise_for_status()
+            data = r.json()
+        except Exception as e:
+            logging.exception("CSE request failed for %s (%s): %s",
+                              query, search_type or "web", e)
+            break
+
+        items = data.get("items") or []
+        logging.debug("CSE page %s type=%s got=%d start=%d",
+                      query, search_type or "web", len(items), start)
+        items_all.extend(items)
+
+        got = len(items)
+        if got == 0:
+            break
+        remaining -= got
+        start += got
+
+    return items_all
+
+def normalize_saved_rel(saved_copy_path: str, downloads_folder_name: str = "scratch/downloads") -> str:
+    """
+    Turn absolute/OS-specific saved_copy path into a clean URL-relative path for /downloads/<path>.
+    """
+    if not saved_copy_path:
+        return ""
+    rel = os.path.normpath(saved_copy_path).replace("\\", "/")
+    if f"{downloads_folder_name}/" in rel:
+        rel = rel.split(f"{downloads_folder_name}/", 1)[-1]
+    return rel
+
+def canonical_base_url(u: str) -> str:
+    """Consistent base-url extraction for both scanner and UI."""
+    try:
+        p = urlparse(u or "")
+        if p.netloc:
+            return p.netloc.lower()
+        return (u or "").lower()
+    except Exception:
+        return "(unknown)"

@@ -4,6 +4,10 @@ from collections import defaultdict
 from urllib.parse import urlparse
 from flask import Flask, render_template, send_from_directory, abort, request, redirect, url_for, flash
 from dmca_monitor.state import load_state, save_state
+from dmca_monitor.checker import install_scheduler
+from datetime import datetime
+
+
 
 
 # --------- Paths (adjust if you moved things) ----------
@@ -26,6 +30,12 @@ def get_state():
 def set_state(s):
     save_state(ALERTS_JSON, s)
 
+install_scheduler(
+    app,
+    get_state=get_state,
+    set_state=set_state,
+    interval_seconds=600,   # every 10 minutes; tune as needed
+)
 
 def base_url(u: str) -> str:
     try:
@@ -161,7 +171,22 @@ def downloads(filename: str):
     fname = os.path.basename(requested)
     return send_from_directory(directory, fname)
 
+@app.route("/admin/recheck-now", methods=["GET", "POST"])
+def recheck_now():
+    from dmca_monitor.checker import run_once
+    n = run_once(get_state, set_state)
+    return {"processed": n}, 200
 
+@app.template_filter("fmt_dt")
+def fmt_dt(value):
+    """Format ISO datetime string into something friendlier like 2025-09-14 20:37"""
+    if not value:
+        return "—"
+    try:
+        dt = datetime.fromisoformat(value.replace("Z", "+00:00"))
+        return dt.strftime("%Y-%m-%d %H:%M")
+    except Exception:
+        return value  # fallback if parsing fails
 
 if __name__ == "__main__":
     # Simple dev server

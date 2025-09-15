@@ -1,0 +1,57 @@
+# Copy to config.yaml and fill in
+search_terms:
+  - mollzba11z
+  - meowllymeow
+  - mollsba11s
+
+
+engines:
+  google:
+    enabled: true
+    api_key: "AIzaSyBhnKiPjDp5mtdSMsUAshbchW79gmQTUwo"   # from Google Cloud (enabled Custom Search JSON API)
+    cse_id:  "b2cbc2d61711c468a"           # from Programmable Search Engine
+    image_count_per_term: 20         # image results per term per run (counts against quota)
+    web_count_per_term: 15            # optional: web results to scrape for extra <img>
+
+    bing:
+      enabled: true
+      endpoint: "https://api.bing.microsoft.com"
+      key: "${BING_SEARCH_KEY}"
+      mkt: "en-US"
+      safeSearch: "Moderate"   # Off|Moderate|Strict
+      freshness: "Week"        # Day|Week|Month or null
+      image_count_per_term: 12
+      web_count_per_term: 4
+
+notify:
+  # slack_webhook: ""            # optional Slack webhook URL
+  discord_webhook: "https://discord.com/api/webhooks/1416607242664284271/fQdcaIY3N1tULrZIqBi6tvaBxeLo_iaob1nN5DqCJ5xGrbGyjrakAZ0IjH4Tdg3CkDgj"
+   # Optional cosmetics:
+  discord_username: "DMCA Monitor"
+  # discord_avatar_url: ""   # e.g., https://example.com/icon.png
+
+
+match:
+  threshold: 7                 # Hamming distance cutoff (lower = stricter)
+  use_ssim: false              # slower second-pass confirmation
+
+paths:
+  hash_db: "db/hashes.json"
+  seen_cache: "db/seen.json"
+  alerts_state: "db/alerts.json"
+  logs_csv: "logs/matches.csv"
+  downloads: "scratch/downloads"
+
+timeouts:
+  request: 15
+
+exclude_domains:
+  - instagram.com
+  - instagr.am
+  - x.com
+  - twitter.com
+  - t.co
+  - tiktok.com
+  - reddit.com
+  - redditmedia.com
+  - pbs.twimg.com

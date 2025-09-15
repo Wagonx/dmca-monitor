@@ -1,0 +1,356 @@
+{
+  "known_images\\08bde22f74b5b179fc44777404675ca3.jpg": {
+    "phash": "b2f34d0c405b39b7",
+    "dhash": "004e1d9d8d37d300",
+    "ahash": "00ffffefc7030000",
+    "whash": "00ffffffd7030000"
+  },
+  "known_images\\09aebc26a70bebbaa43b4ac2d7510b2c.jpg": {
+    "phash": "b4bc4943124aed9f",
+    "dhash": "00361e0c4c47c900",
+    "ahash": "00c3ffc7ffe30000",
+    "whash": "00c3fff7ffe30000"
+  },
+  "known_images\\09e49d4fe06e664b7a2a20f9a97c1aa8.jpg": {
+    "phash": "81a71cc9cb5e92d9",
+    "dhash": "c7c6cecfc3c7c6d4",
+    "ahash": "7f7767737b210000",
+    "whash": "7f7767777b210000"
+  },
+  "known_images\\0d54e262c2b65f67d7f3f9a306a5eafb.jpg": {
+    "phash": "e0d43fe2e0578b58",
+    "dhash": "0c1472c989a34b57",
+    "ahash": "e7d7b8ed7d610003",
+    "whash": "e797b8f57d610003"
+  },
+  "known_images\\0f46b504287ea686069a71211e96a0c7.jpg": {
+    "phash": "cc3c97873652427e",
+    "dhash": "7477319030f2e85c",
+    "ahash": "3f9bd0c0f878fc0c",
+    "whash": "3f9b90c0f878fc0c"
+  },
+  "known_images\\16a6cee3da3fea108129b4b6ca44a940.jpg": {
+    "phash": "d0182eb71a6b973a",
+    "dhash": "c9b2909818ccc3e0",
+    "ahash": "0050f8fcfefee030",
+    "whash": "0050f8fcfefee060"
+  },
+  "known_images\\1d6bb28f4b1400be2838cad0189ac809.jpg": {
+    "phash": "85e27a35599aa5a5",
+    "dhash": "998ec6f6c6fe7a72",
+    "ahash": "4d677f1f07070a00",
+    "whash": "4f677f1f070f0e00"
+  },
+  "known_images\\1de87eb099308af9265f043b796af562.jpg": {
+    "phash": "b5f0b562a6cac631",
+    "dhash": "9e9696160e454e0e",
+    "ahash": "e7c3cbc703000307",
+    "whash": "e7c3c7dfc3008307"
+  },
+  "known_images\\222b796a7ed45956c6a65f87ddf4e525.jpg": {
+    "phash": "ca5f3eaa55923298",
+    "dhash": "71f3d1c3e3c3c3e3",
+    "ahash": "3839397879717171",
+    "whash": "3839397879717171"
+  },
+  "known_images\\2995cad4d576f908a880f25f9b20f408.jpg": {
+    "phash": "dc3c96873652427e",
+    "dhash": "7477319030f2e85c",
+    "ahash": "3f9bd0c0f878fc0c",
+    "whash": "3f9b90c0f878fc0c"
+  },
+  "known_images\\331b2b9ab627f4eb2d4cebeae914836f.jpg": {
+    "phash": "cb2237d08fd03d2e",
+    "dhash": "008f33f1e1b01072",
+    "ahash": "000001fdfffffcbc",
+    "whash": "000000fdfffefcb8"
+  },
+  "known_images\\33cae08c4b755f4e70daed322e3b303c.jpg": {
+    "phash": "a1f25a8fa1714f8c",
+    "dhash": "8f1c54dee7c33233",
+    "ahash": "ffcff66f33300000",
+    "whash": "ffcff66f33300000"
+  },
+  "known_images\\3b9db9d7da0872529320094eae4a86ff.jpg": {
+    "phash": "fdf84b3034794992",
+    "dhash": "110b3b160c2f4947",
+    "ahash": "c0fffbc3c7830000",
+    "whash": "c1ffffe3c7830000"
+  },
+  "known_images\\3c42c900fdc58b65cec7cd6997886de6.jpg": {
+    "phash": "b0f875a5c3f64a82",
+    "dhash": "983e2989cb464e2c",
+    "ahash": "cfcf8d6f6f030600",
+    "whash": "cfcfcd6f4f030600"
+  },
+  "known_images\\57789774d666a10fe2cdb38e1f6242d6.jpg": {
+    "phash": "95fd3af0c8926c98",
+    "dhash": "3438725296cc1838",
+    "ahash": "df9f9fff5e060e00",
+    "whash": "df8f9fae4e060e00"
+  },
+  "known_images\\694f8d275770f9f3f5cef0444b02ec62.jpg": {
+    "phash": "db7ab249a41a2eb4",
+    "dhash": "191929713273d976",
+    "ahash": "fcf8f8b8b838fcff",
+    "whash": "fcf898a81818c8ff"
+  },
+  "known_images\\7d479c7e0567084b1ab94cc4d21fdad9.jpg": {
+    "phash": "ccb65a1a8bc6cc69",
+    "dhash": "ac1c66e693b30111",
+    "ahash": "fcc6f2ff7978c000",
+    "whash": "fcc6f2ff79708000"
+  },
+  "known_images\\8d757966f0e77b1fac356914c48e27c6.jpg": {
+    "phash": "8744309bc179cfd9",
+    "dhash": "8ae6e7e2e1681e06",
+    "ahash": "002331303fbf87c7",
+    "whash": "003331307fbf87c7"
+  },
+  "known_images\\8ea006682d4eceae476e8e19c3098eab.jpg": {
+    "phash": "c8c2dd2cac0df4b5",
+    "dhash": "e3e098b3b797731c",
+    "ahash": "f8f8fe1d0303018e",
+    "whash": "f8fcfe1f0b01018e"
+  },
+  "known_images\\8fccc050601054fbac84efabbb3130f1.jpg": {
+    "phash": "c3958f858b30f566",
+    "dhash": "fce8889848d09153",
+    "ahash": "3f7ee46820380001",
+    "whash": "3f7efe68383e0101"
+  },
+  "known_images\\9e9ade9522ce3abf17ddb2bff2487e60.jpg": {
+    "phash": "a14a4fe53b86f149",
+    "dhash": "d3e59d9d9a8ee6da",
+    "ahash": "010007474f6b3f0f",
+    "whash": "01000f4f4f6b3f3f"
+  },
+  "known_images\\af0bbf319cfde6ce2beb9404e93aa20e.jpg": {
+    "phash": "fe7829ef050f5a10",
+    "dhash": "13133923276d1d39",
+    "ahash": "c1c1c19fbfb58101",
+    "whash": "c1c3c19fbfbd8101"
+  },
+  "known_images\\b0cdbe0a5bf71d8279dfec99c70ccfc7.jpg": {
+    "phash": "837bd0bf624e1aa2",
+    "dhash": "4998f967ce78e080",
+    "ahash": "88ce0c01071f7e78",
+    "whash": "e8ce0301071f7f7c"
+  },
+  "known_images\\bbf49cc011caa157f8fb82c9c2f0aceb.jpg": {
+    "phash": "be28c5994b3446d7",
+    "dhash": "fbff67951b3c2e24",
+    "ahash": "0f0f17050f0797fe",
+    "whash": "0f0f17050f0797fc"
+  },
+  "known_images\\bc3f1e69b9519b717066891f9e4f8877.jpg": {
+    "phash": "809554ddd3e3272d",
+    "dhash": "fcfcefcffaefbbf8",
+    "ahash": "7f7f776f0f010000",
+    "whash": "7f7f776f1f010000"
+  },
+  "known_images\\c5fe230aa394476332721af7afc20ac0.jpg": {
+    "phash": "9abce53be0d4444b",
+    "dhash": "9e1970f5f979f9e0",
+    "ahash": "ff0f1e5f0d0c0c30",
+    "whash": "ff1f1f1f0d0c0c30"
+  },
+  "known_images\\mollzba11z.webp": {
+    "phash": "baa0d599e930c2b7",
+    "dhash": "1be767951b3d366e",
+    "ahash": "cf2717050f0d079f",
+    "whash": "cf2f17050f05079f"
+  },
+  "known_images\\mollzba11z_0001.jpeg": {
+    "phash": "f0b72f400cdfe0f0",
+    "dhash": "668e8c909c80a0b3",
+    "ahash": "b2e6fef8e0e05000",
+    "whash": "b2e6fef8e0f07001"
+  },
+  "known_images\\mollzba11z_0001.jpg": {
+    "phash": "fe7829ef0d1f0a10",
+    "dhash": "13133923276d1d3b",
+    "ahash": "c1c1c19fbfb58101",
+    "whash": "c1c3c19fbfbd8101"
+  },
+  "known_images\\mollzba11z_0002.jpg": {
+    "phash": "c3d58885ab70f566",
+    "dhash": "7ce0889848d09153",
+    "ahash": "ff7ee46020380001",
+    "whash": "ff7efc68383c0101"
+  },
+  "known_images\\mollzba11z_0003.jpg": {
+    "phash": "b5f1a542a6cac671",
+    "dhash": "8e9696160e454e0e",
+    "ahash": "e7c3c3c703000307",
+    "whash": "e7c3c7dfc3008307"
+  },
+  "known_images\\mollzba11z_0004.jpg": {
+    "phash": "e0f43fe2e0578b48",
+    "dhash": "0f1472c989a34b57",
+    "ahash": "e7d7b8ed7d610003",
+    "whash": "e797b8f57d610003"
+  },
+  "known_images\\mollzba11z_0005.jpeg": {
+    "phash": "d4f2095c9e13abcc",
+    "dhash": "1c9c8c0c3c1c1cd4",
+    "ahash": "feeee6c6de040000",
+    "whash": "feeee6eede840000"
+  },
+  "known_images\\mollzba11z_0005.jpg": {
+    "phash": "81a71cc9cb5e92d9",
+    "dhash": "c7c6cecbc3c7c6d4",
+    "ahash": "7f7767737b210000",
+    "whash": "7f7767777b210000"
+  },
+  "known_images\\mollzba11z_0006.jpeg": {
+    "phash": "e99392c99cb872d1",
+    "dhash": "99470f1313179727",
+    "ahash": "ffe3e1c1f8c0c091",
+    "whash": "ffe3e1c1f8c0c091"
+  },
+  "known_images\\mollzba11z_0007.jpeg": {
+    "phash": "9d978878f95aa1e0",
+    "dhash": "38f0e632121231c7",
+    "ahash": "1f1f7fb8c0c08071",
+    "whash": "1f3f7ff8d0808071"
+  },
+  "known_images\\mollzba11z_0007.jpg": {
+    "phash": "c9c6dd6ca80df095",
+    "dhash": "e3f098b3b797731a",
+    "ahash": "f8f8fe1d0303008f",
+    "whash": "f8fcfe1f0301018f"
+  },
+  "known_images\\mollzba11z_0008.jpeg": {
+    "phash": "d5c1018d86f6f279",
+    "dhash": "c0c0080ca00820e0",
+    "ahash": "fefeeef6f0800000",
+    "whash": "fefeeef6f8800000"
+  },
+  "known_images\\mollzba11z_0008.jpg": {
+    "phash": "80855c1ddb23ef2d",
+    "dhash": "fcfcefcffaeffb38",
+    "ahash": "7f7f772f0f000000",
+    "whash": "7f7f776f1f010000"
+  },
+  "known_images\\mollzba11z_0009.jpeg": {
+    "phash": "99c32f5dcc13991c",
+    "dhash": "cac7999836327d77",
+    "ahash": "3f634fff9e1e0101",
+    "whash": "3f634fdf9e0e0101"
+  },
+  "known_images\\mollzba11z_0009.jpg": {
+    "phash": "cca67a088bcecce9",
+    "dhash": "2d1c66e693b10111",
+    "ahash": "fdc6f3ff79788000",
+    "whash": "fdc6f2fb79708000"
+  },
+  "known_images\\mollzba11z_0010.jpeg": {
+    "phash": "c12579c929f4563e",
+    "dhash": "c2cb4ecec3c0129b",
+    "ahash": "606126077bfcfe40",
+    "whash": "606106277ffcfe40"
+  },
+  "known_images\\mollzba11z_0010.jpg": {
+    "phash": "dc3cb686345242fe",
+    "dhash": "7477319030f2e85c",
+    "ahash": "9f1b90c0f878fc0c",
+    "whash": "bf9b90c0f8787c0c"
+  },
+  "known_images\\mollzba11z_0011.jpeg": {
+    "phash": "ab2d7cba584a0f85",
+    "dhash": "3737433b1b494763",
+    "ahash": "838383f9fdad8180",
+    "whash": "83c383f9fdbd8180"
+  },
+  "known_images\\mollzba11z_0011.jpg": {
+    "phash": "fe7829ef050f5a10",
+    "dhash": "13133923276d1d39",
+    "ahash": "c1c1c19fbfb58101",
+    "whash": "c1c3c19fbfbd8101"
+  },
+  "known_images\\mollzba11z_0012.jpeg": {
+    "phash": "96c0dad2fa6da033",
+    "dhash": "c0e8eee6ecf47430",
+    "ahash": "fc7e2716041c0080",
+    "whash": "fc7e7f161c7c8080"
+  },
+  "known_images\\mollzba11z_0013.jpeg": {
+    "phash": "e0a4e037f39f8326",
+    "dhash": "869696938f5d8d8f",
+    "ahash": "e7c3d3e3c000c0e0",
+    "whash": "e7c3e3fbc300c1e0"
+  },
+  "known_images\\mollzba11z_0013.jpg": {
+    "phash": "b5e0b542a6cad633",
+    "dhash": "8e9696160e454e0e",
+    "ahash": "e7c3c3c703000387",
+    "whash": "e7c3c7dfc3000387"
+  },
+  "known_images\\mollzba11z_0014.jpeg": {
+    "phash": "8e0fe70cf10679e1",
+    "dhash": "67676371b1316491",
+    "ahash": "3f1f1f1d1d1c3fff",
+    "whash": "3f1f1915181813ff"
+  },
+  "known_images\\mollzba11z_0014.jpg": {
+    "phash": "db7ab249a4522eb4",
+    "dhash": "1919297132739976",
+    "ahash": "fcfcf8b8b838fcff",
+    "whash": "fcf898a81818c8ff"
+  },
+  "known_images\\mollzba11z_0015.jpeg": {
+    "phash": "d22e84ea331b4ef4",
+    "dhash": "6de660198ce1f8fc",
+    "ahash": "11733080e0f87e1e",
+    "whash": "1773c080e0f8fe3e"
+  },
+  "known_images\\mollzba11z_0015.jpg": {
+    "phash": "817bd0bf664e1aa2",
+    "dhash": "4998f967ce78e080",
+    "ahash": "88ce0c01071f7e78",
+    "whash": "e8ce0301071f7f7c"
+  },
+  "known_images\\mollzba11z_0016.jpeg": {
+    "phash": "f42f1ab0eeaba428",
+    "dhash": "35584646a68698a4",
+    "ahash": "8000e0e0f2c6fcf0",
+    "whash": "8100f0f2f2d6fcf4"
+  },
+  "known_images\\mollzba11z_0016.jpg": {
+    "phash": "a14a0fe53baeb129",
+    "dhash": "d3e59d9d9a8ee6da",
+    "ahash": "010007474f6b3f0f",
+    "whash": "01000f4f4f6b3f3f"
+  },
+  "known_images\\mollzba11z_0017.jpeg": {
+    "phash": "844d3ae24f3ec26b",
+    "dhash": "4cb2f6e6e6cc3cf8",
+    "ahash": "000a1f3f7f7f070f",
+    "whash": "000a1f3f7f7f0706"
+  },
+  "known_images\\mollzba11z_0017.jpg": {
+    "phash": "ca2077d08ff0bd68",
+    "dhash": "900f33f1e1b00072",
+    "ahash": "0000017dfffffc9c",
+    "whash": "000000fdfffefcb8"
+  },
+  "known_images\\mollzba11z_0018.jpeg": {
+    "phash": "fb5d904efc611382",
+    "dhash": "2000195621c38b9b",
+    "ahash": "f0f0e8a0f0e0e9ff",
+    "whash": "f0d0e0a0f0e0e9ff"
+  },
+  "known_images\\mollzba11z_0018.jpg": {
+    "phash": "d0182eb71a6b973a",
+    "dhash": "c9b2909898ccc3a0",
+    "ahash": "0050f8fcfefee0f0",
+    "whash": "0050f8fcfeeee0e0"
+  },
+  "known_images\\mollzba11z_0019.jpg": {
+    "phash": "be29c599893446d7",
+    "dhash": "fbff67951b3c2e24",
+    "ahash": "0f0f07050f0797fe",
+    "whash": "0f0b17050f0797fe"
+  }
+}
